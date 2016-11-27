@@ -10,8 +10,42 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="tk.bugnotwolf.sharejack.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="12dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.13" />
+
+        <Button
+            android:text="Broadcast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/serverButton"
+            android:elevation="0dp"
+            android:layout_weight="0.18"
+            android:onClick="toServer" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.21" />
+
+        <Button
+            android:text="Listen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/clientButton"
+            android:layout_weight="0.20"
+            android:elevation="0dp"
+            android:onClick="toClient" />
+    </LinearLayout>
 </RelativeLayout>
