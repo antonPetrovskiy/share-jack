@@ -1,4 +1,4 @@
-package tk.bug_is_not_a_wolf.sharejack;
+package tk.bugnotwolf.sharejack;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package tk.bug_is_not_a_wolf.sharejack;
+package tk.bugnotwolf.sharejack;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("tk.bug_is_not_a_wolf.sharejack", appContext.getPackageName());
+        assertEquals("tk.bugnotwolf.sharejack", appContext.getPackageName());
     }
 }
