@@ -13,13 +13,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void toServer(View view) {
-        Intent intent = new Intent(this, ServerActivity.class);
+    public void toClient(View view) {
+        Intent intent = new Intent(this, ClientActivity.class);
         startActivity(intent);
     }
 
-    public void toClient(View view) {
-        Intent intent = new Intent(this, ClientActivity.class);
+    public void toServer(View view) {
+        Intent intent = new Intent(this, ServerActivity.class);
         startActivity(intent);
     }
 }

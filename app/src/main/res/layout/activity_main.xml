@@ -26,12 +26,12 @@
             android:layout_weight="0.13" />
 
         <Button
-            android:text="Broadcast"
+            android:text="Server Activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/serverButton"
-            android:elevation="0dp"
             android:layout_weight="0.18"
+            android:elevation="0dp"
             android:onClick="toServer" />
 
         <Space
@@ -40,12 +40,12 @@
             android:layout_weight="0.21" />
 
         <Button
-            android:text="Listen"
+            android:text="Client Activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/clientButton"
             android:layout_weight="0.20"
             android:elevation="0dp"
-            android:onClick="toClient" />
+            android:onClick="toClient " />
     </LinearLayout>
 </RelativeLayout>
