@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
-
+import android.media.MediaPlayer.OnPreparedListener;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,9 +21,10 @@ import java.net.URISyntaxException;
  * Created by tosch on 01.12.2016.
  */
 
-public class MusicPlayer {
+public class MusicPlayer implements OnPreparedListener{
     MediaPlayer mPlayer = new MediaPlayer();
     AppCompatActivity activity;
+    boolean path, stream;
 
 
     public MusicPlayer(AppCompatActivity a){
@@ -32,8 +33,18 @@ public class MusicPlayer {
 
 
 
-    public void setFromPath(){
+    public void setFromPath(String s){
+        path = true;
 
+        try {
+            mPlayer.setDataSource(s);
+            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+            mPlayer.prepare();
+            Toast.makeText(activity, "Файл загружен", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Toast.makeText(activity, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void setFromBytes(byte arr []){
@@ -68,15 +79,14 @@ public class MusicPlayer {
         }
     }
 
-    public void setFromUri(){
-        //Uri myUri = Uri.parse("http://stream.basso.fi:8000/stream");
-        Uri myUri = Uri.parse("android.resource://tk.bugnotwolf.sharejack/" + R.raw.song);
-        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+    public void setFromServer(String s){
+        stream = true;
 
         try {
-            mPlayer.setDataSource(activity, myUri);
-            mPlayer.prepare();
-            Toast.makeText(activity, "Файл загружен", Toast.LENGTH_LONG).show();
+            mPlayer.setDataSource(s);
+            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mPlayer.prepareAsync();
+            Toast.makeText(activity, "Стрим с сервера готов", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Toast.makeText(activity, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
         }
@@ -87,42 +97,36 @@ public class MusicPlayer {
     }
 
     public void startAudio(){
-        if(checkAudio())
+        if(stream)
+            mPlayer.setOnPreparedListener(this);
+        if(path)
             mPlayer.start();
     }
 
     public void pauseAudio(){
-        if(checkAudio())
+        if(!stream)
             mPlayer.pause();
     }
 
     public void stopAudio(){
-        if(checkAudio())
-            stop();
-    }
-
-    private void stop(){
         mPlayer.stop();
-        try {
-            mPlayer.prepare();
-            mPlayer.seekTo(0);
-        }
-        catch (Throwable t) {
-            Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
 
-    public boolean checkAudio(){
-        if(!(mPlayer.getDuration() > 0)){
-            Toast toast = Toast.makeText(activity,
-                    "Выберите файл", Toast.LENGTH_SHORT);
-            toast.show();
-            return false;
-        }else{
-            return true;
-        }
+            try {
+                mPlayer.prepare();
+                mPlayer.seekTo(0);
+            }
+            catch (Throwable t) {
+                Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
 
     }
+
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        mp.start();
+    }
+
 
 
 

@@ -33,6 +33,19 @@
             android:layout_weight="0.17" />
 
         <Button
+            android:text="SET STREAM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/setStreamButton"
+            android:layout_weight="0.06"
+            android:onClick="setStreamButton" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.17" />
+
+        <Button
             android:text="Share"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,5 +96,15 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="86dp"
+        android:layout_marginEnd="86dp"
+        android:layout_marginBottom="444dp" />
 
 </RelativeLayout>
