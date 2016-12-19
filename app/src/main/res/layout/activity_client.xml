@@ -10,13 +10,51 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="tk.bugnotwolf.sharejack.ClientActivity">
 
-    <TextView
-        android:text="Тут тип играет музыка"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="121dp"
-        android:id="@+id/textView2"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="13dp">
 
+        <Button
+            android:text="Set stream"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/streamButton"
+            android:onClick="setStreamButton" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="73dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="PLAY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/playButton"
+                android:layout_weight="1"
+                android:onClick="playButton" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:text="STOP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/stopButton"
+                android:layout_weight="1"
+                android:onClick="stopButton" />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

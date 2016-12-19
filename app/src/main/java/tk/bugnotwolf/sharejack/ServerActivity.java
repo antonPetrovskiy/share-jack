@@ -16,7 +16,6 @@ public class ServerActivity extends AppCompatActivity {
     Button stopButton;
     Button shareButton;
     Button setFileButton;
-    Button setStreamButton;
     MusicPlayer musicPlayer = new MusicPlayer(this);
 
     @Override
@@ -30,7 +29,7 @@ public class ServerActivity extends AppCompatActivity {
         shareButton = (Button)findViewById(R.id.shareButton);
         setFileButton = (Button)findViewById(R.id.setFileButton);
 
-        setFileButton.setEnabled(false);
+        setFileButton.setEnabled(true);
         playButton.setEnabled(false);
         pauseButton.setEnabled(false);
         stopButton.setEnabled(false);
@@ -45,12 +44,6 @@ public class ServerActivity extends AppCompatActivity {
         shareButton.setEnabled(true);
     }
 
-    public void setStreamButton(View view){
-        musicPlayer.setFromServer("http://stream.basso.fi:8000/stream");
-        playButton.setEnabled(true);
-        pauseButton.setEnabled(true);
-        shareButton.setEnabled(true);
-    }
 
     public void playButton(View view){
         musicPlayer.startAudio();

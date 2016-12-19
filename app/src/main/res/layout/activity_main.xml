@@ -46,6 +46,6 @@
             android:id="@+id/clientButton"
             android:layout_weight="0.20"
             android:elevation="0dp"
-            android:onClick="toClient " />
+            android:onClick="toClient" />
     </LinearLayout>
 </RelativeLayout>

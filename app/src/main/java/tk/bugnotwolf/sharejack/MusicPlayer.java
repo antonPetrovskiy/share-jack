@@ -24,7 +24,7 @@ import java.net.URISyntaxException;
 public class MusicPlayer implements OnPreparedListener{
     MediaPlayer mPlayer = new MediaPlayer();
     AppCompatActivity activity;
-    boolean path, stream;
+    private String SERVER_ADRESS;
 
 
     public MusicPlayer(AppCompatActivity a){
@@ -34,12 +34,10 @@ public class MusicPlayer implements OnPreparedListener{
 
 
     public void setFromPath(String s){
-        path = true;
 
         try {
-            mPlayer.setDataSource(s);
+            mPlayer.setDataSource(activity, Uri.parse(s));
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
             mPlayer.prepare();
             Toast.makeText(activity, "Файл загружен", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
@@ -80,47 +78,59 @@ public class MusicPlayer implements OnPreparedListener{
     }
 
     public void setFromServer(String s){
-        stream = true;
-
-        try {
-            mPlayer.setDataSource(s);
-            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mPlayer.prepareAsync();
-            Toast.makeText(activity, "Стрим с сервера готов", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            Toast.makeText(activity, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-        }
-
-
-
-
+        SERVER_ADRESS = s;
+        Toast.makeText(activity, "Стрим с сервера готов", Toast.LENGTH_LONG).show();
     }
 
     public void startAudio(){
-        if(stream)
+        mPlayer.start();
+    }
+
+    public void startStreamAudio(){
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(SERVER_ADRESS);
+            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setOnPreparedListener(this);
-        if(path)
-            mPlayer.start();
+            mPlayer.prepareAsync();
+
+        } catch (IOException e) {
+            Toast.makeText(activity, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        }
+        mPlayer.start();
     }
 
     public void pauseAudio(){
-        if(!stream)
-            mPlayer.pause();
+        mPlayer.pause();
     }
 
     public void stopAudio(){
         mPlayer.stop();
-
             try {
-                mPlayer.prepare();
+                mPlayer.prepareAsync();
                 mPlayer.seekTo(0);
             }
             catch (Throwable t) {
                 Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
-
     }
 
+    public void stopStreamAudio(){
+        mPlayer.stop();
+        releaseMP();
+    }
+
+
+    private void releaseMP() {
+        if (mPlayer != null) {
+            try {
+                mPlayer.release();
+                mPlayer = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public void onPrepared(MediaPlayer mp) {

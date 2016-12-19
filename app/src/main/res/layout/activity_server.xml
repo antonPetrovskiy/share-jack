@@ -32,14 +32,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.17" />
 
-        <Button
-            android:text="SET STREAM"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/setStreamButton"
-            android:layout_weight="0.06"
-            android:onClick="setStreamButton" />
-
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
