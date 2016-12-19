@@ -86,7 +86,7 @@ public class MusicPlayer implements OnPreparedListener{
             mPlayer.setDataSource(s);
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.prepareAsync();
-            Toast.makeText(activity, "Стрим с сервера готов", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "Стримм с сервера готов", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Toast.makeText(activity, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
         }
