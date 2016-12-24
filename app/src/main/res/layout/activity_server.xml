@@ -50,6 +50,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.45" />
 
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar"
+            android:layout_weight="0.06" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

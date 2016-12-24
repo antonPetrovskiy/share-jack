@@ -6,7 +6,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.Toast;
 import android.media.MediaPlayer.OnPreparedListener;
 
@@ -22,12 +24,14 @@ import java.net.URISyntaxException;
  */
 
 public class MusicPlayer implements OnPreparedListener{
-    MediaPlayer mPlayer = new MediaPlayer();
+    private MediaPlayer mPlayer;
     AppCompatActivity activity;
-    private String SERVER_ADRESS;
+    private String SERVER_ADDRESS;
+    private boolean ready;
 
 
     public MusicPlayer(AppCompatActivity a){
+        mPlayer = new MediaPlayer();
         activity = a;
     }
 
@@ -78,18 +82,27 @@ public class MusicPlayer implements OnPreparedListener{
     }
 
     public void setFromServer(String s){
-        SERVER_ADRESS = s;
+        SERVER_ADDRESS = s;
+        try {
+            mPlayer.setDataSource(SERVER_ADDRESS);
+            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mPlayer.setOnPreparedListener(this);
+            mPlayer.prepareAsync();
+        } catch (IOException e) {
+            Toast.makeText(activity, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        }
         Toast.makeText(activity, "Стрим с сервера готов", Toast.LENGTH_LONG).show();
     }
 
     public void startAudio(){
-        mPlayer.start();
+        if(ready)
+            mPlayer.start();
     }
 
     public void startStreamAudio(){
         mPlayer = new MediaPlayer();
         try {
-            mPlayer.setDataSource(SERVER_ADRESS);
+            mPlayer.setDataSource(SERVER_ADDRESS);
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setOnPreparedListener(this);
             mPlayer.prepareAsync();
@@ -120,6 +133,20 @@ public class MusicPlayer implements OnPreparedListener{
         releaseMP();
     }
 
+    public void rebootStream(){
+        releaseMP();
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(SERVER_ADDRESS);
+            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mPlayer.setOnPreparedListener(this);
+            mPlayer.prepareAsync();
+
+        } catch (IOException e) {
+            Toast.makeText(activity, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        }
+        mPlayer.start();
+    }
 
     private void releaseMP() {
         if (mPlayer != null) {
@@ -134,11 +161,13 @@ public class MusicPlayer implements OnPreparedListener{
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        mp.start();
+        ready = true;
+        //TODO mPlayer.seekTo() current position and mPlayer.start() if music is playing now
     }
 
-
-
+    public MediaPlayer getPlayer(){
+        return mPlayer;
+    }
 
 
 }

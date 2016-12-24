@@ -14,6 +14,7 @@ public class ClientActivity extends AppCompatActivity {
 
     MusicPlayer musicPlayer = new MusicPlayer(this);
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +29,13 @@ public class ClientActivity extends AppCompatActivity {
     }
 
     public void setStreamButton(View view){
-        musicPlayer.setFromServer("http://stream.basso.fi:8000/stream");
+        musicPlayer.setFromServer("https://sharejack.tk/audio/ADC17605.mp3");
         playButton.setEnabled(true);
         streamButton.setEnabled(false);
     }
 
     public void playButton(View view){
-        musicPlayer.startStreamAudio();
+        musicPlayer.startAudio();
         stopButton.setEnabled(true);
         playButton.setEnabled(false);
     }
