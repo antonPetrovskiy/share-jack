@@ -31,14 +31,13 @@ public class MusicPlayer implements OnPreparedListener{
 
 
     public MusicPlayer(AppCompatActivity a){
-        mPlayer = new MediaPlayer();
         activity = a;
     }
 
 
 
     public void setFromPath(String s){
-
+        mPlayer = new MediaPlayer();
         try {
             mPlayer.setDataSource(activity, Uri.parse(s));
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -47,6 +46,7 @@ public class MusicPlayer implements OnPreparedListener{
         } catch (IOException e) {
             Toast.makeText(activity, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
         }
+        ready = true;
     }
 
     public void setFromBytes(byte arr []){
@@ -82,6 +82,7 @@ public class MusicPlayer implements OnPreparedListener{
     }
 
     public void setFromServer(String s){
+        mPlayer = new MediaPlayer();
         SERVER_ADDRESS = s;
         try {
             mPlayer.setDataSource(SERVER_ADDRESS);
@@ -91,7 +92,7 @@ public class MusicPlayer implements OnPreparedListener{
         } catch (IOException e) {
             Toast.makeText(activity, "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(activity, "Стрим с сервера готов", Toast.LENGTH_LONG).show();
+
     }
 
     public void startAudio(){
@@ -148,7 +149,7 @@ public class MusicPlayer implements OnPreparedListener{
         mPlayer.start();
     }
 
-    private void releaseMP() {
+    public void releaseMP() {
         if (mPlayer != null) {
             try {
                 mPlayer.release();
@@ -162,6 +163,7 @@ public class MusicPlayer implements OnPreparedListener{
     @Override
     public void onPrepared(MediaPlayer mp) {
         ready = true;
+        Toast.makeText(activity, "Стрим с сервера готов", Toast.LENGTH_LONG).show();
         //TODO mPlayer.seekTo() current position and mPlayer.start() if music is playing now
     }
 

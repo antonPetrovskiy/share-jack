@@ -9,8 +9,10 @@ import android.widget.Button;
 public class ClientActivity extends AppCompatActivity {
 
     Button playButton;
-    Button streamButton;
-    Button stopButton;
+    Button disconnectStreamButton;
+    Button connectStreamButton;
+    Button muteButton;
+    private boolean muted;
 
     MusicPlayer musicPlayer = new MusicPlayer(this);
 
@@ -21,29 +23,45 @@ public class ClientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_client);
 
         playButton = (Button)findViewById(R.id.playButton);
-        streamButton = (Button)findViewById(R.id.streamButton);
-        stopButton = (Button)findViewById(R.id.stopButton);
+        connectStreamButton = (Button)findViewById(R.id.connectstreamButton);
+        disconnectStreamButton = (Button)findViewById(R.id.disconnectStreamButton);
+        muteButton = (Button)findViewById(R.id.muteButton);
 
+        connectStreamButton.setEnabled(true);
+        disconnectStreamButton.setEnabled(false);
         playButton.setEnabled(false);
-        stopButton.setEnabled(false);
+        muteButton.setEnabled(false);
     }
 
-    public void setStreamButton(View view){
+    public void connectStreamButton(View view){
         musicPlayer.setFromServer("https://sharejack.tk/audio/ADC17605.mp3");
+        connectStreamButton.setEnabled(false);
         playButton.setEnabled(true);
-        streamButton.setEnabled(false);
+        disconnectStreamButton.setEnabled(true);
+        muteButton.setEnabled(true);
+    }
+
+    public void disconnectStreamButton(View view){
+        musicPlayer.releaseMP();
+        connectStreamButton.setEnabled(true);
+        playButton.setEnabled(false);
+        disconnectStreamButton.setEnabled(false);
+        muteButton.setEnabled(false);
     }
 
     public void playButton(View view){
         musicPlayer.startAudio();
-        stopButton.setEnabled(true);
         playButton.setEnabled(false);
     }
 
-    public void stopButton(View view){
-        musicPlayer.stopStreamAudio();
-        stopButton.setEnabled(false);
-        playButton.setEnabled(true);
+    public void muteButton(View view){
+
+        if(!muted){
+            musicPlayer.releaseMP();
+        }else{
+            musicPlayer.rebootStream();
+        }
+
     }
 
 }

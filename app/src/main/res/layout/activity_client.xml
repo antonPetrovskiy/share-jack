@@ -20,11 +20,22 @@
         android:layout_marginTop="13dp">
 
         <Button
-            android:text="Set stream"
+            android:text="Connect to stream"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/streamButton"
-            android:onClick="setStreamButton" />
+            android:id="@+id/connectstreamButton"
+            android:onClick="connectStreamButton" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <Button
+            android:text="Disconnect from stream"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/disconnectStreamButton"
+            android:onClick="disconnectStreamButton" />
 
         <Space
             android:layout_width="match_parent"
@@ -49,12 +60,12 @@
                 android:layout_weight="1" />
 
             <Button
-                android:text="STOP"
+                android:text="MUTE"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/stopButton"
+                android:id="@+id/muteButton"
                 android:layout_weight="1"
-                android:onClick="stopButton" />
+                android:onClick="muteButton" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
