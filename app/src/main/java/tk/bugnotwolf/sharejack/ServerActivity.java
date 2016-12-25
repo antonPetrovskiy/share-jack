@@ -50,7 +50,7 @@ public class ServerActivity extends AppCompatActivity {
     }
 
     public void setFileButton(View view){
-        musicPlayer.setFromPath("android.resource://tk.bugnotwolf.sharejack/" + R.raw.song1);
+        musicPlayer.setFromPath("android.resource://tk.bugnotwolf.sharejack/" + R.raw.song);
         playButton.setEnabled(true);
         pauseButton.setEnabled(true);
         shareButton.setEnabled(true);
