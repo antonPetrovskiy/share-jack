@@ -2,10 +2,14 @@ package tk.bugnotwolf.sharejack.serverevents;
 
 public interface StreamListener {
     void connect();
+
     void disconnect();
 
-    @FunctionalInterface
-    interface StatusUpdateListener {
-        void onStatusUpdate(StreamStatus state);
-    }
+    void onPlay(StreamStatus status);
+
+    void onPause(StreamStatus status);
+
+    void onVolumeChange(StreamStatus status);
+
+    void onTimeChange(StreamStatus status);
 }

@@ -19,15 +19,33 @@ public class ClientActivity extends AppCompatActivity {
 
     private MusicPlayer musicPlayer = new MusicPlayer(this);
 
-    private StreamListener streamListener = new WebSocketListener("https://sharejack.tk", status -> {
-        int msec = status.getCurrentTime() * 1000;
-        musicPlayer.getPlayer().seekTo(msec); // TODO avoid implementation dependent player
-        if (status.isPlaying()) {
+    private StreamListener streamListener = new WebSocketListener("https://sharejack.tk") {
+        @Override
+        public void onPlay(StreamStatus status) {
+            int msec = status.getCurrentTime() * 1000;
+            musicPlayer.getPlayer().seekTo(msec); // TODO avoid implementation dependent player
             musicPlayer.startAudio();
-        } else {
-            musicPlayer.pauseAudio();
         }
-    });
+
+        @Override
+        public void onPause(StreamStatus status) {
+            musicPlayer.pauseAudio();
+            int msec = status.getCurrentTime() * 1000;
+            musicPlayer.getPlayer().seekTo(msec); // TODO avoid implementation dependent player
+        }
+
+        @Override
+        public void onVolumeChange(StreamStatus status) {
+            float volume = (float) status.getVolume();
+            musicPlayer.getPlayer().setVolume(volume, volume);
+        }
+
+        @Override
+        public void onTimeChange(StreamStatus status) {
+            int msec = status.getCurrentTime() * 1000;
+            musicPlayer.getPlayer().seekTo(msec); // TODO avoid implementation dependent player
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

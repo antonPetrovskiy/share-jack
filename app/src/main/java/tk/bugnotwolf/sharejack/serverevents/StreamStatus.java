@@ -2,10 +2,10 @@ package tk.bugnotwolf.sharejack.serverevents;
 
 public final class StreamStatus {
     private boolean isPlaying;
-    private int volume;
+    private double volume;
     private int currentTime;
 
-    public StreamStatus(boolean isPlaying, int volume, int currentTime) {
+    public StreamStatus(boolean isPlaying, double volume, int currentTime) {
         this.isPlaying = isPlaying;
         this.volume = volume;
         this.currentTime = currentTime;
@@ -15,7 +15,7 @@ public final class StreamStatus {
         return isPlaying;
     }
 
-    public int getVolume() {
+    public double getVolume() {
         return volume;
     }
 

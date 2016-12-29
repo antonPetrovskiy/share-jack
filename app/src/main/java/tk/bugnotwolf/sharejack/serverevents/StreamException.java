@@ -1,6 +1,8 @@
 package tk.bugnotwolf.sharejack.serverevents;
 
 public class StreamException extends RuntimeException {
+    private static final long serialVersionUID = -346348954L;
+
     public StreamException() {
     }
 
