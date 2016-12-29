@@ -2,39 +2,26 @@ package tk.bugnotwolf.sharejack;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.SeekBar;
 import android.widget.Toast;
-import android.media.MediaPlayer.OnPreparedListener;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
-
-
-/**
- * Created by tosch on 01.12.2016.
- */
 
 public class MusicPlayer implements OnPreparedListener{
     private MediaPlayer mPlayer;
-    AppCompatActivity activity;
-    private String SERVER_ADDRESS;
+    private AppCompatActivity activity;
+    private String serverAddress;
     private boolean ready;
-
 
     public MusicPlayer(AppCompatActivity a){
         activity = a;
     }
-
-
 
     public void setFromPath(String s){
         mPlayer = new MediaPlayer();
@@ -83,9 +70,9 @@ public class MusicPlayer implements OnPreparedListener{
 
     public void setFromServer(String s){
         mPlayer = new MediaPlayer();
-        SERVER_ADDRESS = s;
+        serverAddress = s;
         try {
-            mPlayer.setDataSource(SERVER_ADDRESS);
+            mPlayer.setDataSource(serverAddress);
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setOnPreparedListener(this);
             mPlayer.prepareAsync();
@@ -95,15 +82,15 @@ public class MusicPlayer implements OnPreparedListener{
 
     }
 
-    public void startAudio(){
-        if(ready)
+    public void startAudio() {
+        if (ready)
             mPlayer.start();
     }
 
     public void startStreamAudio(){
         mPlayer = new MediaPlayer();
         try {
-            mPlayer.setDataSource(SERVER_ADDRESS);
+            mPlayer.setDataSource(serverAddress);
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setOnPreparedListener(this);
             mPlayer.prepareAsync();
@@ -138,7 +125,7 @@ public class MusicPlayer implements OnPreparedListener{
         releaseMP();
         mPlayer = new MediaPlayer();
         try {
-            mPlayer.setDataSource(SERVER_ADDRESS);
+            mPlayer.setDataSource(serverAddress);
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setOnPreparedListener(this);
             mPlayer.prepareAsync();
