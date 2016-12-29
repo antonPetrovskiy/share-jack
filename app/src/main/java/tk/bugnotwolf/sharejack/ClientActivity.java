@@ -67,7 +67,7 @@ public class ClientActivity extends AppCompatActivity {
         musicPlayer.setFromServer("https://sharejack.tk/audio/ADC17605.mp3");
         streamListener.connect();
         connectStreamButton.setEnabled(false);
-        playButton.setEnabled(true);
+        playButton.setEnabled(false);
         disconnectStreamButton.setEnabled(true);
         muteButton.setEnabled(true);
     }

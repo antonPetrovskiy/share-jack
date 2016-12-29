@@ -6,6 +6,7 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
@@ -152,6 +153,8 @@ public class MusicPlayer implements OnPreparedListener{
         ready = true;
         Toast.makeText(activity, "Стрим с сервера готов", Toast.LENGTH_LONG).show();
         //TODO mPlayer.seekTo() current position and mPlayer.start() if music is playing now
+        Button playButton = (Button) activity.findViewById(R.id.playButton);
+        playButton.setEnabled(true);
     }
 
     public MediaPlayer getPlayer(){
