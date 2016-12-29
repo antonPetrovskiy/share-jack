@@ -19,6 +19,7 @@ public class MusicPlayer implements OnPreparedListener{
     private AppCompatActivity activity;
     private String serverAddress;
     private boolean ready;
+    private boolean muted;
 
     public MusicPlayer(AppCompatActivity a){
         activity = a;
@@ -85,6 +86,7 @@ public class MusicPlayer implements OnPreparedListener{
 
     public void startAudio() {
         if (ready)
+
             mPlayer.start();
     }
 
@@ -120,6 +122,16 @@ public class MusicPlayer implements OnPreparedListener{
     public void stopStreamAudio(){
         mPlayer.stop();
         releaseMP();
+    }
+
+    public void muteAudio(){
+        if(!muted){
+            mPlayer.setVolume(0,0);
+            muted = true;
+        }else{
+            mPlayer.setVolume(1,1);
+            muted = false;
+        }
     }
 
     public void rebootStream(){

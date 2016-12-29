@@ -1,5 +1,6 @@
 package tk.bugnotwolf.sharejack;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -82,15 +83,17 @@ public class ClientActivity extends AppCompatActivity {
     }
 
     public void playButton(View view) {
-        musicPlayer.startAudio();
         playButton.setEnabled(false);
     }
 
-    public void muteButton(View view) {
-        if (muted) {
-            musicPlayer.rebootStream();
-        } else {
-            musicPlayer.releaseMP();
+    public void muteButton(View view){
+        musicPlayer.muteAudio();
+        if(muted){
+            muteButton.setBackgroundColor(Color.LTGRAY);
+            muted = false;
+        }else{
+            muteButton.setBackgroundColor(Color.RED);
+            muted = true;
         }
     }
 }
