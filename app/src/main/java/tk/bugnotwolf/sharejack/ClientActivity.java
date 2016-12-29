@@ -18,18 +18,16 @@ public class ClientActivity extends AppCompatActivity {
     private boolean muted;
 
     private MusicPlayer musicPlayer = new MusicPlayer(this);
-    private StreamListener streamListener = new WebSocketListener() {
-        @Override
-        public void onStatusUpdate(StreamStatus status) {
-            int msec = status.getCurrentTime() * 1000;
-            musicPlayer.getPlayer().seekTo(msec); // TODO avoid implementation dependent player
-            if (status.isPlaying()) {
-                musicPlayer.startAudio();
-            } else {
-                musicPlayer.pauseAudio();
-            }
+
+    private StreamListener streamListener = new WebSocketListener("https://sharejack.tk", status -> {
+        int msec = status.getCurrentTime() * 1000;
+        musicPlayer.getPlayer().seekTo(msec); // TODO avoid implementation dependent player
+        if (status.isPlaying()) {
+            musicPlayer.startAudio();
+        } else {
+            musicPlayer.pauseAudio();
         }
-    };
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +47,7 @@ public class ClientActivity extends AppCompatActivity {
 
     public void connectStreamButton(View view) {
         musicPlayer.setFromServer("https://sharejack.tk/audio/ADC17605.mp3");
-        streamListener.connect("wss://sharejack.tk/socket.io/");
+        streamListener.connect();
         connectStreamButton.setEnabled(false);
         playButton.setEnabled(true);
         disconnectStreamButton.setEnabled(true);
@@ -66,7 +64,6 @@ public class ClientActivity extends AppCompatActivity {
     }
 
     public void playButton(View view) {
-        streamListener.play();
         musicPlayer.startAudio();
         playButton.setEnabled(false);
     }

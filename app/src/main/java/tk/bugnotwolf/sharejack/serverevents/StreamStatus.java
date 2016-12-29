@@ -22,4 +22,13 @@ public final class StreamStatus {
     public int getCurrentTime() {
         return currentTime;
     }
+
+    @Override
+    public String toString() {
+        return "StreamStatus{" +
+            "isPlaying=" + isPlaying +
+            ", volume=" + volume +
+            ", currentTime=" + currentTime +
+            '}';
+    }
 }

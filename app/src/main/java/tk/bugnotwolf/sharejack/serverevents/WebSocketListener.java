@@ -3,61 +3,47 @@ package tk.bugnotwolf.sharejack.serverevents;
 
 import android.util.Log;
 
-import com.neovisionaries.ws.client.WebSocket;
-import com.neovisionaries.ws.client.WebSocketAdapter;
-import com.neovisionaries.ws.client.WebSocketException;
-import com.neovisionaries.ws.client.WebSocketExtension;
-import com.neovisionaries.ws.client.WebSocketFactory;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.IOException;
+import java.net.URISyntaxException;
 
-public abstract class WebSocketListener implements StreamListener {
-    private static final int TIMEOUT = 8000;
-    private static final WebSocketFactory wsFactory = new WebSocketFactory().setConnectionTimeout(TIMEOUT);
-    private static final String TAG = WebSocketListener.class.toString();
+import io.socket.client.IO;
+import io.socket.client.Socket;
 
-    private WebSocket ws;
+public class WebSocketListener implements StreamListener {
+    private static final String TAG = WebSocketListener.class.getSimpleName();
 
-    /**
-     * Method blocks until the handshake is performed.
-     */
-    @Override
-    public void connect(String server) {
+    private Socket socket;
 
-
-
+    public WebSocketListener(String uri, StatusUpdateListener updateListener) {
         try {
-            ws = wsFactory.createSocket(server)
-                .addListener(new WebSocketAdapter() {
-                    @Override
-                    public void onTextMessage(WebSocket websocket, String text) throws Exception {
-                        Log.v(TAG, text);
-                        if (text.equals("status")) {
-                        }
-                    }
-                })
-                .addExtension(WebSocketExtension.PERMESSAGE_DEFLATE)
-                .connectAsynchronously();
-        } catch (IOException e) {
-            throw new StreamException(e);
+            socket = IO.socket(uri);
+        } catch (URISyntaxException e) {
+            throw new StreamException();
         }
+        socket.on("status", a -> {
+            JSONObject json = (JSONObject) a[0];
+            try {
+                boolean isPlaying = json.getBoolean("isPlaying");
+                int volume = json.getInt("volume");
+                int currentTime = json.getInt("currentTime");
+                StreamStatus status = new StreamStatus(isPlaying, volume, currentTime);
+                Log.d(TAG, status.toString());
+                updateListener.onStatusUpdate(status);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Override
+    public void connect() {
+        socket.connect();
     }
 
     @Override
     public void disconnect() {
-        ws.disconnect();
-    }
-
-    @Override
-    public void play() {
-        ensureWebSocket().sendText("play");
-    }
-
-    private WebSocket ensureWebSocket() {
-        if (ws != null) {
-            return ws;
-        } else {
-            throw new IllegalStateException("Call connect() first");
-        }
+        socket.disconnect();
     }
 }
